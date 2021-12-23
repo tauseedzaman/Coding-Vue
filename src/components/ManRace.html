@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="marathon" style="font-size: 50px;">
+    </div>
+    <script>
+
+        const {
+            reactive,
+            watch,
+        } = Vue;
+        const maxRoadLength = 50;
+        const competitor = reactive({
+            position: 0,
+            speed: 1,
+        });
+
+        watch(() => {
+            const street = Array(maxRoadLength).fill('_');
+            const marathonEl = document.getElementById('marathon');
+            street[competitor.position] = (competitor.position % 2 === 1)
+                ? ' A '
+                : ' B ';
+            marathonEl.innerHTML = '';
+            marathonEl.innerHTML = street.reverse().join('');
+        });
+
+        setInterval(() => {
+            competitor.position = mod(competitor.position + competitor.speed,
+                maxRoadLength)
+        }, 100);
+
+    </script>
+</body>
+
+</html>
